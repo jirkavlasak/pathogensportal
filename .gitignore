@@ -1,0 +1,9 @@
+data/
+site/public/
+site/resources/_gen/
+site/.hugo_build.lock
+.DS_Store
+__pycache__/
+*.pyc
+.env
+public_test/

@@ -1,0 +1,47 @@
+{{/* Usage: {{< chart id="myChart" src="/data/charts/file.json" type="line" title="Titulek" height="380" >}} */}}
+{{ $id    := .Get "id" }}
+{{ $src   := .Get "src" }}
+{{ $type  := .Get "type"   | default "line" }}
+{{ $title := .Get "title"  | default "" }}
+{{ $height := .Get "height" | default "380" }}
+
+<div class="chart-wrapper my-4">
+  {{ with $title }}<h5 class="chart-title">{{ . }}</h5>{{ end }}
+  <div style="position:relative;height:{{ $height }}px">
+    <canvas id="{{ $id }}"></canvas>
+  </div>
+</div>
+<script>
+(function(){
+  var src = {{ $src }};
+  var type = {{ $type }};
+  var canvasId = {{ $id }};
+  function renderChart(data) {
+    var ctx = document.getElementById(canvasId);
+    if (!ctx) return;
+    new Chart(ctx, {
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12 } },
+          tooltip: { mode: 'index' }
+        },
+        scales: {
+          x: { ticks: { maxTicksLimit: 18, maxRotation: 45 } },
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch(src).then(function(r){ return r.json(); }).then(renderChart);
+    });
+  } else {
+    fetch(src).then(function(r){ return r.json(); }).then(renderChart);
+  }
+})();
+</script>
