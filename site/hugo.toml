@@ -1,19 +1,21 @@
 baseURL = "http://localhost:1313/"
 title = "Pathogen Portal CZ"
 theme = "hugo-pathogens-portal"
-defaultContentLanguage = "en"
+defaultContentLanguage = "cs"
 defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 
 [params]
-  mail = "portal@example.cz"
+  mail = "vlasakj@vscht.cz"
   homepage = "https://pathogens.vm.cesnet.cz"
+  logo = "/images/elixir_logo.png"
 
 [languages]
-  [languages.en]
+  [languages.cs]
     title = "Pathogen Portal CZ"
     weight = 1
-    label = "English"
+    label = "Čeština"
+    locale = "cs-CZ"
     contentDir = "content/en"
 
 [menus]

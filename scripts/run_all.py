@@ -10,7 +10,7 @@ from pathlib import Path
 # Přidej scripts/ do Python path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from scrapers import mzcr_covid, ecdc_covid, szu_influenza
+from scrapers import mzcr_covid, ecdc_covid, szu_influenza, uzis_isin
 
 DATA_ROOT = Path(__file__).resolve().parents[1] / "data"
 
@@ -20,6 +20,7 @@ def run():
         ("MZCR COVID-19",        mzcr_covid.download,    DATA_ROOT / "mzcr"),
         ("ECDC COVID-19 (CZ)",   ecdc_covid.download,    DATA_ROOT / "ecdc"),
         ("SZÚ chřipka (hist.)",  szu_influenza.download, DATA_ROOT / "szu"),
+        ("ÚZIS ISIN inf. nem.",  uzis_isin.download,     DATA_ROOT / "isin"),
     ]
 
     all_files = []

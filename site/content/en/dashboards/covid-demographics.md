@@ -3,7 +3,7 @@ title: "COVID-19 — Věk a vakcinace"
 description: "Analýza 12,6 milionů COVID-19 případů v ČR podle věku pacientů a vakcinačního statusu — hospitalizace, hospitalizační míra. Data MZČR."
 image: "/images/dashboard-placeholder.svg"
 highlight: false
-tags: ["covid-19", "SARS-CoV-2", "vakcinace", "věk", "hospitalizace", "MZČR"]
+tags: ["SARS-CoV-2", "hospitalizace", "vakcinace", "epidemiologie", "MZČR"]
 data_source: '<a href="https://onemocneni-aktualne.mzcr.cz" target="_blank">MZČR — Otevřená data COVID-19</a>'
 update_freq: "Souhrnná data (celé období pandemie)"
 ---

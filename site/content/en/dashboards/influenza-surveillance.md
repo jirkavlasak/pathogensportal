@@ -3,7 +3,7 @@ title: "Influenza & Respirační Viry"
 description: "Virologická surveillance chřipky a respiračních virů v České republice — sezónní přehled 2012–2022, data SZÚ/NRL."
 image: "/images/dashboard-placeholder.svg"
 highlight: true
-tags: ["influenza", "chřipka", "RSV", "respirační viry", "SZÚ"]
+tags: ["chřipka", "RSV", "surveillance", "SZÚ", "ČR"]
 data_source: '<a href="https://szu.gov.cz" target="_blank">SZÚ — Národní referenční laboratoř pro chřipku</a>'
 update_freq: "Historická data (2012/13–2021/22)"
 ---

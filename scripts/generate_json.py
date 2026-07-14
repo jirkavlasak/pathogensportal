@@ -458,6 +458,144 @@ def covid_by_vaccination():
     })
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# ISIN — Infekční nemoci (ÚZIS ČR, CC BY 4.0)
+# ─────────────────────────────────────────────────────────────────────────────
+
+ISIN_FILE = DATA_IN / "isin" / "isin_infekcni_nemoci.csv"
+
+# Mapping NUTS3 → human-readable short name (same order as SVG map)
+NUTS3_NAMES = {
+    "CZ010": "Praha",
+    "CZ020": "Středočeský",
+    "CZ031": "Jihočeský",
+    "CZ032": "Plzeňský",
+    "CZ041": "Karlovarský",
+    "CZ042": "Ústecký",
+    "CZ051": "Liberecký",
+    "CZ052": "Královéhradecký",
+    "CZ053": "Pardubický",
+    "CZ063": "Vysočina",
+    "CZ064": "Jihomoravský",
+    "CZ071": "Olomoucký",
+    "CZ072": "Zlínský",
+    "CZ080": "Moravskoslezský",
+}
+
+
+def _load_isin() -> pd.DataFrame:
+    if not ISIN_FILE.exists():
+        return pd.DataFrame()
+    df = pd.read_csv(ISIN_FILE, encoding="utf-8-sig")
+    df.columns = df.columns.str.strip()
+    return df
+
+
+# ── 13. Top 10 diagnóz — roční počty případů 2018–2025 ───────────────────────
+def isin_top_diseases():
+    df = _load_isin()
+    if df.empty:
+        print("  [isin_top] žádná data"); return
+
+    # Top 10 diagnóz dle celkového počtu
+    top = (df.groupby("diagnoza_nazev")["pocet_pripadu"]
+             .sum()
+             .sort_values(ascending=False)
+             .head(10)
+             .index.tolist())
+
+    by_year = (df[df["diagnoza_nazev"].isin(top)]
+               .groupby(["rok", "diagnoza_nazev"])["pocet_pripadu"]
+               .sum()
+               .unstack(fill_value=0))
+
+    years = [str(y) for y in sorted(by_year.index.tolist())]
+    color_cycle = ["blue", "red", "teal", "orange", "green", "purple",
+                   "blue", "red", "teal", "orange"]
+    datasets = []
+    for i, diag in enumerate(top):
+        if diag in by_year.columns:
+            datasets.append(ds(diag, by_year[diag].tolist(),
+                               color_cycle[i % len(color_cycle)], "bar"))
+
+    save("isin_top_diseases", {"labels": years, "datasets": datasets})
+
+
+# ── 14. Regionální mapa — počet případů per kraj (posledni dostupny rok) ─────
+def isin_regional_map():
+    df = _load_isin()
+    if df.empty:
+        print("  [isin_map] žádná data"); return
+
+    last_year = int(df["rok"].max())
+    by_region = (df[df["rok"] == last_year]
+                 .groupby("kraj_kod")["pocet_pripadu"]
+                 .sum()
+                 .reset_index())
+
+    # Build dict: NUTS3 code → count
+    region_data = {}
+    for _, row in by_region.iterrows():
+        code = str(row["kraj_kod"]).strip()
+        if code in NUTS3_NAMES:
+            region_data[code] = int(row["pocet_pripadu"])
+
+    save("isin_regional_map", {
+        "year": last_year,
+        "regions": region_data,
+        "labels": NUTS3_NAMES,
+    })
+
+
+# ── 15. Sezónní trend — měsíční případy vybraných nemocí (2018–) ─────────────
+def isin_monthly_trend():
+    df = _load_isin()
+    if df.empty:
+        print("  [isin_monthly] žádná data"); return
+
+    SELECTED = {
+        "Plané neštovice [varicella]": "purple",
+        "Jiné infekce způsobené salmonelami": "orange",
+        "Dávivý kašel [pertussis]": "red",
+        "Jiné spirochetové infekce": "green",
+    }
+    mask = df["diagnoza_nazev"].isin(SELECTED.keys())
+    df2 = df[mask].copy()
+    df2["ym"] = df2["rok"].astype(str) + "-" + df2["mesic"].astype(str).str.zfill(2)
+    by_ym = (df2.groupby(["ym", "diagnoza_nazev"])["pocet_pripadu"]
+               .sum()
+               .unstack(fill_value=0))
+    by_ym = by_ym.sort_index()
+
+    labels = by_ym.index.tolist()
+    color_map = SELECTED
+    datasets = []
+    for diag in SELECTED:
+        if diag in by_ym.columns:
+            datasets.append(ds(diag, by_ym[diag].tolist(),
+                               color_map.get(diag, "blue")))
+
+    save("isin_monthly_trend", {"labels": labels, "datasets": datasets})
+
+
+# ── 16. Věkové rozložení — případy dle věkové skupiny (celkem 2018–) ──────────
+def isin_age_groups():
+    df = _load_isin()
+    if df.empty:
+        print("  [isin_age] žádná data"); return
+
+    # Sort by numeric vek_kod to get correct age order
+    by_age = (df.groupby(["vek_kod", "vek_nazev"])["pocet_pripadu"]
+                .sum()
+                .reset_index()
+                .sort_values("vek_kod"))
+
+    save("isin_age_groups", {
+        "labels": by_age["vek_nazev"].tolist(),
+        "datasets": [ds("Počet případů (2018–)", by_age["pocet_pripadu"].tolist(), "blue", "bar")],
+    })
+
+
 if __name__ == "__main__":
     print("Generuji Chart.js JSON data...")
     covid_cases_weekly()
@@ -475,4 +613,9 @@ if __name__ == "__main__":
     print("  --- COVID věk & očkování ---")
     covid_by_age()
     covid_by_vaccination()
+    print("  --- ISIN infekční nemoci ---")
+    isin_top_diseases()
+    isin_regional_map()
+    isin_monthly_trend()
+    isin_age_groups()
     print("Hotovo.")

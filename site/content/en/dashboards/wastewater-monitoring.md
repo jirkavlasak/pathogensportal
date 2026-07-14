@@ -3,7 +3,7 @@ title: "Wastewater Monitoring"
 description: "Surveillance SARS-CoV-2 a poliovirů v komunálních odpadních vodách — časný varovný signál pro cirkulaci patogenů na populační úrovni."
 image: "/images/dashboard-placeholder.svg"
 highlight: true
-tags: ["odpadní vody", "WBE", "SARS-CoV-2", "poliovirus"]
+tags: ["odpadní vody", "SARS-CoV-2", "poliovirus", "surveillance", "ČR"]
 data_source: '<a href="https://szu.gov.cz/temata-zdravi-a-bezpecnosti/surveillance-odpadnich-vod/" target="_blank">SZÚ — surveillance odpadních vod</a>'
 update_freq: "Průběžně"
 redirect_url: "https://arcg.is/PyKSy1"

@@ -3,7 +3,7 @@ title: "Influenza Tracker"
 description: "Monitoring chřipky a akutních respiračních infekcí (ARI) v České republice — sezónní přehled a cirkulující viry."
 image: "/images/dashboard-placeholder.svg"
 highlight: true
-tags: ["chřipka", "ARI", "respirační", "sezónní"]
+tags: ["chřipka", "surveillance", "ECDC", "Evropa"]
 data_source: '<a href="https://szu.gov.cz/publikace/data/akutni-respiracni-infekce-chripka/" target="_blank">SZÚ — ARI/chřipka surveillance</a>'
 update_freq: "Týdně (každé pondělí)"
 ---

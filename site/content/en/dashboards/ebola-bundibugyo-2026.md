@@ -3,7 +3,7 @@ title: "Ebola — Bundibugyo virus (DRC/Uganda 2026)"
 description: "Situační report vypuknutí Bundibugyo viru v DRC a Ugandě 2026 — přehled případů, genomika, léčba a vakcíny, riziko pro ČR. Zdroj: IMG AV ČR / UJEP."
 image: "/images/dashboard-placeholder.svg"
 highlight: true
-tags: ["ebola", "Bundibugyo", "DRC", "hemoragická horečka", "IMG AV ČR"]
+tags: ["ebola", "epidemiologie", "IMG AV ČR", "Afrika"]
 data_source: 'Jan Paces & Michaela Liegertová — <a href="https://www.img.cas.cz" target="_blank">IMG AV ČR</a> / UJEP / VZÚ'
 update_freq: "Průběžně aktualizováno (aktivní vypuknutí)"
 ---

@@ -7,3 +7,5 @@ __pycache__/
 *.pyc
 .env
 public_test/
+.claude/
+audit/
