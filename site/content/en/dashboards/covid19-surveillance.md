@@ -8,10 +8,6 @@ data_source: '<a href="https://onemocneni-aktualne.mzcr.cz" target="_blank">MZČ
 update_freq: "Denně"
 ---
 
-<a href="https://virus.img.cas.cz/" target="_blank" class="btn btn-primary mb-4">
-  Živé grafy SARS-CoV-2 — virus.img.cas.cz
-</a>
-
 {{< stat-card src="/data/charts/covid_summary.json" >}}
 
 {{< chart id="covidCases" src="/data/charts/covid_cases_weekly.json" title="Nové případy a úmrtí — týdenní přehled" height="380" >}}

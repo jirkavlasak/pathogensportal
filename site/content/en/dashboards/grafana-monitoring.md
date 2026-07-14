@@ -6,7 +6,7 @@ highlight: false
 tags: ["monitoring", "databáze", "pipeline", "Grafana"]
 data_source: "PostgreSQL — lokální databáze patogenů"
 update_freq: "Živě (real-time)"
-redirect_url: "/grafana/"
+redirect_url: "http://localhost:3000"
 ---
 
 **Grafana** je vizualizační nástroj napojený přímo na PostgreSQL databázi portálu.
@@ -26,12 +26,12 @@ Grafana běží jako součást Docker Compose stacku:
 docker compose up grafana
 ```
 
-Portál ji zpřístupňuje přes reverzní proxy Apache na **/grafana/**.
+Poté otevři: **http://localhost:3000** (login: `admin` / `portal_dev`)
 
-<a href="/grafana/" target="_blank" class="btn btn-primary mt-2 mb-3">
-  Otevřít Grafana (/grafana/)
+<a href="http://localhost:3000" target="_blank" class="btn btn-primary mt-2 mb-3">
+  Otevřít Grafana (localhost:3000)
 </a>
 
-> **Poznámka:** Přihlašovací údaje (`admin` / `portal_dev`) jsou dočasné vývojové heslo — před ostrým provozem je nutné je změnit.
+> **Poznámka:** Grafana je dostupná pouze lokálně nebo po VPN. V produkci bude přístupná z interní sítě Metacentrum.
 
 <p class="stat-source">Grafana OSS · Apache 2.0 · napojeno na PostgreSQL 16</p>
